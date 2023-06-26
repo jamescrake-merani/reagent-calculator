@@ -6,4 +6,7 @@
  []
 
  :builds
- {}}
+ {:app {:output-dir "out/"
+        :asset-path "."
+        :target :browser
+        :modules {:main {:init-fn reagent-calculator.main/render}}}}}
