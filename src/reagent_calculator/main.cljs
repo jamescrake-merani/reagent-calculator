@@ -9,4 +9,4 @@
 (defn render
   []
   (rd/render [base]
-             (-.getElementById js/document "app")))
+             (.getElementById js/document "app")))
