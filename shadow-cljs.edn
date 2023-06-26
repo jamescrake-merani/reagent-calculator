@@ -5,6 +5,8 @@
  :dependencies
  [[reagent "1.2.0"]]
 
+ :dev-http {8080 "out/"}
+
  :builds
  {:app {:output-dir "out/"
         :asset-path "."
