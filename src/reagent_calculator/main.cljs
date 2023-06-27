@@ -51,7 +51,7 @@
     (not (nil? result)) result
     (and (nil? operation) (not (nil? left-value))) left-value
     ;; TODO: convert operation to string.
-    (not (and (nil? left-value operation right-value))) (str left-value " " operation " " right-value)
+    (not (and (nil? left-value) (nil? right-value) (nil? operation))) (str left-value " " operation " " right-value)
     :else ""))
 
 (defn calculator
