@@ -5,10 +5,12 @@
 (defn build-buttons
   []
   (map
-   (fn [value]
+   (fn [values]
      ;; TODO: Printing is a placeholder
-     [:button {:on-click #(js/console.log value)} value])
-   [1 2 3 4 5 6 7 8 9]))
+     [:div {:id "calculator-btn-row" :key values}
+      (map (fn [value]
+             [:button {:on-click #(js/console.log value) :key value} value]) values)])
+   [[1 2 3] [4 5 6] [7 8 9]]))
 
 (defn calculator
   []
