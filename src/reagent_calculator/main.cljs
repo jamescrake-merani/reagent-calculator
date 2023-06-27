@@ -32,7 +32,6 @@
   [left-value right-value operation result]
   (map
    (fn [values]
-     ;; TODO: Printing is a placeholder
      [:div {:id "calculator-btn-row" :key values}
       (map (fn [value]
              [:button
