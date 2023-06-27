@@ -19,9 +19,9 @@
      (build-buttons)]]])
 
 (defn base []
- [:div
-  [:h1 "Reagent Calculator"]
-  [calculator]])
+  [:div
+   [:h1 "Reagent Calculator"]
+   [calculator]])
 
 
 (defn render
