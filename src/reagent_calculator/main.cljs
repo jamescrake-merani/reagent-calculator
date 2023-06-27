@@ -18,7 +18,7 @@
      ;; TODO: Printing is a placeholder
      [:div {:id "calculator-btn-row" :key values}
       (map (fn [value]
-             [:button {:on-click #(js/console.log value) :key value} value]) values)])
+             [:button {:on-click #(js/console.log value) :key value} (represent-value value)]) values)])
    [[1 2 3] [4 5 6] [7 8 9]]))
 
 (defn calculator
