@@ -12,6 +12,22 @@
     (= value 'equals) "="
     :else "unknown"))
 
+(defn swap-value-appender!
+  [atom value]
+  (swap! atom #(str % value)))
+
+(defn handle-button [value left-value right-value operation result]
+  (cond
+    (int? value) (if (nil? right-value)
+                   (swap-value-appender! left-value value)
+                   (swap-value-appender! right-value value))
+    ;; Shouldn't let the user enter an operation when there's nothing on the
+    ;; left hand side
+    (symbol? value) (when-not (nil? left-value)
+                      (reset! operation value))
+    ;; TODO: handle equals sign
+    ))
+
 (defn build-buttons
   [left-value right-value operation result]
   (map
