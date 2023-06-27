@@ -60,11 +60,13 @@
         right-value (r/atom nil)
         operation (r/atom nil)
         result (r/atom nil)]
-    [:div
-     [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result)}]
-     [:div {:id "btn-columns"}
-      [:div {:id "calc-buttons"}
-       (build-buttons left-value right-value operation result)]]]))
+    (fn []
+      [:div
+       [:button {:on-click #(handle-button 2 left-value right-value operation result)}]
+       [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result)}]
+       [:div {:id "btn-columns"}
+        [:div {:id "calc-buttons"}
+         (build-buttons left-value right-value operation result)]]])))
 
 (defn base []
   [:div
