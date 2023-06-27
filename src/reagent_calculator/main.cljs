@@ -18,7 +18,7 @@
 
 (defn handle-button [value left-value right-value operation result]
   (cond
-    (int? value) (if (nil? @right-value)
+    (int? value) (if (nil? @operation)
                    (swap-value-appender! left-value value)
                    (swap-value-appender! right-value value))
     ;; Shouldn't let the user enter an operation when there's nothing on the
