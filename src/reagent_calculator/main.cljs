@@ -2,6 +2,15 @@
   [:require [reagent.core :as r]
    [reagent.dom :as rd]])
 
+(defn represent-value [value]
+  (cond
+    (int? value) (str value)
+    (= value 'addition) "+"
+    (= value 'subtraction) "-"
+    (= value 'multiplication) "*"
+    (= value 'equals) "="
+    :else "unknown"))
+
 (defn build-buttons
   []
   (map
