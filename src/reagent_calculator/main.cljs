@@ -13,7 +13,7 @@
     :else "unknown"))
 
 (defn build-buttons
-  []
+  [left-value right-value operation result]
   (map
    (fn [values]
      ;; TODO: Printing is a placeholder
@@ -29,11 +29,15 @@
 
 (defn calculator
   []
-  [:div
-   [:input {:type "text"}]
-   [:div {:id "btn-columns"}
-    [:div {:id "calc-buttons"}
-     (build-buttons)]]])
+  (let [left-value (r/atom nil)
+        right-value (r/atom nil)
+        operation (r/atom nil)
+        result (r/atom nil)]
+    [:div
+     [:input {:type "text"}]
+     [:div {:id "btn-columns"}
+      [:div {:id "calc-buttons"}
+       (build-buttons left-value right-value operation result)]]]))
 
 (defn base []
   [:div
