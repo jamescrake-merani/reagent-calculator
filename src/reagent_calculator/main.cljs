@@ -43,6 +43,16 @@
    ;; this later
    [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] ['equals]]))
 
+;; FIXME: I think there might be a better solution to this problem. Its just
+;; that I can't think of one at present so this will have to do
+(defn entry-box-representation
+  [left-value right-value operation result]
+  (cond
+    (not (nil? result)) result
+    (nil? operation) left-value
+    ;; TODO: convert operation to string.
+    :else (str left-value " " operation " " right-value)))
+
 (defn calculator
   []
   (let [left-value (r/atom nil)
@@ -50,7 +60,7 @@
         operation (r/atom nil)
         result (r/atom nil)]
     [:div
-     [:input {:type "text"}]
+     [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result)}]
      [:div {:id "btn-columns"}
       [:div {:id "calc-buttons"}
        (build-buttons left-value right-value operation result)]]]))
