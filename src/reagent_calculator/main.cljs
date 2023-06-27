@@ -36,7 +36,7 @@
      [:div {:id "calculator-btn-row" :key values}
       (map (fn [value]
              [:button
-              {:on-click #(js/console.log value) :key value}
+              {:on-click #(handle-button value left-value right-value operation result) :key value}
               (represent-value value)])
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
