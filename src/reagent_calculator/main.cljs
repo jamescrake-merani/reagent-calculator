@@ -49,9 +49,10 @@
   [left-value right-value operation result]
   (cond
     (not (nil? result)) result
-    (nil? operation) left-value
+    (and (nil? operation) (not (nil? left-value))) left-value
     ;; TODO: convert operation to string.
-    :else (str left-value " " operation " " right-value)))
+    (not (and (nil? left-value operation right-value))) (str left-value " " operation " " right-value)
+    :else ""))
 
 (defn calculator
   []
