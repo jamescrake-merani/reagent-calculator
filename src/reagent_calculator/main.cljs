@@ -8,6 +8,7 @@
     (= value 'addition) "+"
     (= value 'subtraction) "-"
     (= value 'multiplication) "*"
+    (= value 'division) "/"
     (= value 'equals) "="
     :else "unknown"))
 
@@ -22,7 +23,7 @@
               {:on-click #(js/console.log value) :key value}
               (represent-value value)])
            values)])
-   [[1 2 3] [4 5 6] [7 8 9]]))
+   [[1 2 3 ] [4 5 6] [7 8 9]]))
 
 (defn calculator
   []
