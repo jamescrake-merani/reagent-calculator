@@ -34,8 +34,13 @@
                     new-value
                     old-value))))
 
+(defn all-clear! [& vals]
+  (doseq [value vals]
+    (reset! value nil)))
+
 (defn handle-button [value left-value right-value operation result]
   (cond
+    (not (nil? @result)) (all-clear! left-value right-value operation result)
     (int? value) (if (nil? @operation)
                    (swap-value-appender! left-value value)
                    (swap-value-appender! right-value value))
@@ -60,7 +65,7 @@
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
    ;; this later
-   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] ['equals]]))
+   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] [0 'equals]]))
 
 ;; FIXME: I think there might be a better solution to this problem. Its just
 ;; that I can't think of one at present so this will have to do
