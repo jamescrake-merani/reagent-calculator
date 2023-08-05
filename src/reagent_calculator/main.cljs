@@ -56,7 +56,7 @@
   [state]
   (if (and (some? @(:operator state)) @(nil? (:right-value state)))
     (reset! (:operator state) nil)
-    (let [to-backspace (if (some? :right-value)
+    (let [to-backspace (if (some? @(:right-value state))
                          (:right-value state)
                          (:left-value state))]
       (swap! to-backspace #(clojure.string/join (drop-last %))))))
