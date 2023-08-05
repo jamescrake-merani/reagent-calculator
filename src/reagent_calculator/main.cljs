@@ -60,6 +60,7 @@
                    (swap-value-appender! (:right-value state) value))
     ;; Shouldn't let the user enter an operation when there's nothing on the
     ;; left hand side
+    (= value 'backspace) (backspace state)
     (symbol? value) (when-not (nil? @(:left-value state))
                       (if (= value 'equals)
                         (swap-result! state (calc-result state))
@@ -79,7 +80,7 @@
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
    ;; this later
-   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] [0 'equals]]))
+   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] [0 'equals 'backspace]]))
 
 ;; FIXME: I think there might be a better solution to this problem. Its just
 ;; that I can't think of one at present so this will have to do
