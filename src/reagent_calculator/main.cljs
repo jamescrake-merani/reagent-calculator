@@ -72,7 +72,7 @@
 
 (defn handle-button [state value]
   (cond
-    (not (nil? @(:result state))) (all-clear! state)
+    (some @(:result state)) (all-clear! state)
     (int? value) (if (nil? @(:operation state))
                    (swap-value-appender! (:left-value state) value)
                    (swap-value-appender! (:right-value state) value))
