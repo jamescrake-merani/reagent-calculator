@@ -89,7 +89,7 @@
     (not (nil? @(:result state))) @(:result state)
     (and (nil? @(:operation state)) (not (nil? @(:left-value state)))) @(:left-value state)
     ;; TODO: convert operation to string.
-    (not (and (nil? @(:left-value state)) (nil? @(:right-value state)) (nil? @(:operation state)))) (str @(:left-value state) " " @(:operation state) " " @(:right-value state))
+    (not (and (nil? @(:left-value state)) (nil? @(:right-value state)) (nil? @(:operation state)))) (str @(:left-value state) " " (represent-value @(:operation state)) " " @(:right-value state))
     :else ""))
 
 (defn on-typed-input
