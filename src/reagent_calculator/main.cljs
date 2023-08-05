@@ -17,9 +17,10 @@
   (swap! atom #(str % value)))
 
 (defn calc-result
-   [left-value right-value operation]
-  (let [left-value-num (parse-long left-value)
-        right-value-num (parse-long right-value)]
+   [state]
+  (let [left-value-num (parse-long @(:left-value state))
+        right-value-num (parse-long @(:right-value state))
+        operation @(:operation state)]
     (cond
       (= operation 'addition) (+ left-value-num right-value-num)
       (= operation 'subtraction) (- left-value-num right-value-num)
@@ -28,39 +29,39 @@
 
 ;; Doesn't replace if there is already a result.
 (defn swap-result!
-  [result new-value]
-  (swap! result (fn [old-value]
+  [state new-value]
+  (swap! (:result state) (fn [old-value]
                   (if (nil? old-value)
                     new-value
                     old-value))))
 
-(defn all-clear! [& vals]
-  (doseq [value vals]
+(defn all-clear! [state]
+  (doseq [value (vals state)]
     (reset! value nil)))
 
-(defn handle-button [value left-value right-value operation result]
+(defn handle-button [state value]
   (cond
-    (not (nil? @result)) (all-clear! left-value right-value operation result)
-    (int? value) (if (nil? @operation)
-                   (swap-value-appender! left-value value)
-                   (swap-value-appender! right-value value))
+    (not (nil? @(:result state))) (all-clear! state)
+    (int? value) (if (nil? @(:operation state))
+                   (swap-value-appender! (:left-value state) value)
+                   (swap-value-appender! (:right-value state) value))
     ;; Shouldn't let the user enter an operation when there's nothing on the
     ;; left hand side
-    (symbol? value) (when-not (nil? @left-value)
+    (symbol? value) (when-not (nil? @(:left-value state))
                       (if (= value 'equals)
-                        (swap-result! result (calc-result @left-value @right-value @operation))
-                        (reset! operation value)))
+                        (swap-result! state (calc-result state))
+                        (reset! (:operation state) value)))
     ;; TODO: handle equals sign
     ))
 
 (defn build-buttons
-  [left-value right-value operation result]
+  [state]
   (map
    (fn [values]
      [:div {:id "calculator-btn-row" :key values}
       (map (fn [value]
              [:button
-              {:on-click #(handle-button value left-value right-value operation result) :key value}
+              {:on-click #(handle-button state value) :key value}
               (represent-value value)])
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
@@ -70,12 +71,12 @@
 ;; FIXME: I think there might be a better solution to this problem. Its just
 ;; that I can't think of one at present so this will have to do
 (defn entry-box-representation
-  [left-value right-value operation result]
+  [state]
   (cond
-    (not (nil? result)) result
-    (and (nil? operation) (not (nil? left-value))) left-value
+    (not (nil? @(:result state))) @(:result state)
+    (and (nil? @(:operation state)) (not (nil? @(:left-value state)))) @(:left-value state)
     ;; TODO: convert operation to string.
-    (not (and (nil? left-value) (nil? right-value) (nil? operation))) (str left-value " " operation " " right-value)
+    (not (and (nil? @(:left-value state)) (nil? @(:right-value state)) (nil? @(:operation state)))) (str @(:left-value state) " " @(:operation state) " " @(:right-value state))
     :else ""))
 
 (defn on-typed-input
@@ -88,16 +89,16 @@
 
 (defn calculator
   []
-  (let [left-value (r/atom nil)
-        right-value (r/atom nil)
-        operation (r/atom nil)
-        result (r/atom nil)]
+  (let [state {:left-value (r/atom nil)
+               :right-value (r/atom nil)
+               :operation (r/atom nil)
+               :result (r/atom nil)}]
     (fn []
       [:div
-       [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result) :on-change on-typed-input}]
+       [:input {:type "text" :value (entry-box-representation state) :on-change on-typed-input}]
        [:div {:id "btn-columns"}
         [:div {:id "calc-buttons"}
-         (build-buttons left-value right-value operation result)]]])))
+         (build-buttons state)]]])))
 
 (defn base []
   [:div
