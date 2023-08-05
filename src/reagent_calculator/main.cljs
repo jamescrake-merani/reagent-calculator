@@ -69,10 +69,10 @@
                          (:left-value state))]
       (swap! to-backspace backspace-value))))
 
-
 (defn handle-button [state value]
   (cond
-    (some? @(:result state)) (all-clear! state)
+    (some? @(:result state)) (do (all-clear! state)
+                                 (handle-button state value))
     (int? value) (if (nil? @(:operation state))
                    (swap-value-appender! (:left-value state) value)
                    (swap-value-appender! (:right-value state) value))
