@@ -80,12 +80,11 @@
     :else ""))
 
 (defn on-typed-input
-  [event]
-  (let [input (-> event .-target .-value)
+  [event state]
+  (let [input (-> event .-key)
         parsed-input (parse-long input)]
     (if parsed-input
-      ;; TODO: Handle.
-      (js/console.log "Placeholder"))))
+      (handle-button state parsed-input))))
 
 (defn calculator
   []
@@ -95,7 +94,7 @@
                :result (r/atom nil)}]
     (fn []
       [:div
-       [:input {:type "text" :value (entry-box-representation state) :on-change on-typed-input}]
+       [:input {:type "text" :value (entry-box-representation state) :on-key-down #(on-typed-input % state)}]
        [:div {:id "btn-columns"}
         [:div {:id "calc-buttons"}
          (build-buttons state)]]])))
