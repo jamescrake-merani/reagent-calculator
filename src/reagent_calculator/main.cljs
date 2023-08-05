@@ -102,6 +102,15 @@
         (when-not (nil? operation)
           (handle-button state operation))))))
 
+(defn backspace
+  [state]
+  (if (and (some? @(:operator state)) @(nil? (:right-value state)))
+    (reset! (:operator state) nil)
+    (let [to-backspace (if (some? :right-value)
+                         (:right-value state)
+                         (:left-value state))]
+      (swap! to-backspace #(clojure.string/join (drop-last %))))))
+
 (defn calculator
   []
   (let [state {:left-value (r/atom nil)
