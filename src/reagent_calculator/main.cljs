@@ -21,7 +21,7 @@
     (= key "-") 'subtraction
     (or (= key "x") (= key "*")) 'multiplication
     (or (= key "/") (= key "÷")) 'division
-    (= key "=") 'equals
+    (or (= key "=") (= key "Enter")) 'equals
     :else nil
     ))
 
