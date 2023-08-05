@@ -86,7 +86,7 @@
 (defn entry-box-representation
   [state]
   (cond
-    (not (nil? @(:result state))) @(:result state)
+    (not (nil? @(:result state))) (str "= " @(:result state))
     (and (nil? @(:operation state)) (not (nil? @(:left-value state)))) @(:left-value state)
     ;; TODO: convert operation to string.
     (not (and (nil? @(:left-value state)) (nil? @(:right-value state)) (nil? @(:operation state)))) (str @(:left-value state) " " (represent-value @(:operation state)) " " @(:right-value state))
