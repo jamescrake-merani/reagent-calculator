@@ -78,6 +78,14 @@
     (not (and (nil? left-value) (nil? right-value) (nil? operation))) (str left-value " " operation " " right-value)
     :else ""))
 
+(defn on-typed-input
+  [event]
+  (let [input (-> event .-target .-value)
+        parsed-input (parse-long input)]
+    (if parsed-input
+      ;; TODO: Handle.
+      (js/console.log "Placeholder"))))
+
 (defn calculator
   []
   (let [left-value (r/atom nil)
@@ -86,7 +94,7 @@
         result (r/atom nil)]
     (fn []
       [:div
-       [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result)}]
+       [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result) :on-change on-typed-input}]
        [:div {:id "btn-columns"}
         [:div {:id "calc-buttons"}
          (build-buttons left-value right-value operation result)]]])))
