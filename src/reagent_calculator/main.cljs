@@ -23,6 +23,7 @@
     (or (= key "x") (= key "*")) 'multiplication
     (or (= key "/") (= key "÷")) 'division
     (or (= key "=") (= key "Enter")) 'equals
+    (= key "Backspace") 'backspace
     :else nil
     ))
 
