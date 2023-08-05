@@ -81,7 +81,6 @@
         result (r/atom nil)]
     (fn []
       [:div
-       [:button {:on-click #(handle-button 2 left-value right-value operation result)}]
        [:input {:type "text" :value (entry-box-representation @left-value @right-value @operation @result)}]
        [:div {:id "btn-columns"}
         [:div {:id "calc-buttons"}
