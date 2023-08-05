@@ -16,6 +16,24 @@
   [atom value]
   (swap! atom #(str % value)))
 
+(defn calc-result
+   [left-value right-value operation]
+  (let [left-value-num (parse-long left-value)
+        right-value-num (parse-long right-value)]
+    (cond
+      (= operation 'addition) (+ left-value-num right-value-num)
+      (= operation 'subtraction) (- left-value-num right-value-num)
+      (= operation 'multiplication) (* left-value-num right-value-num)
+      (= operation 'division) (/ left-value-num right-value-num))))
+
+;; Doesn't replace if there is already a result.
+(defn swap-result!
+  [result new-value]
+  (swap! result (fn [old-value]
+                  (if (nil? old-value)
+                    new-value
+                    old-value))))
+
 (defn handle-button [value left-value right-value operation result]
   (cond
     (int? value) (if (nil? @operation)
@@ -24,7 +42,9 @@
     ;; Shouldn't let the user enter an operation when there's nothing on the
     ;; left hand side
     (symbol? value) (when-not (nil? @left-value)
-                      (reset! operation value))
+                      (if (= value 'equals)
+                        (swap-result! result (calc-result @left-value @right-value @operation))
+                        (reset! operation value)))
     ;; TODO: handle equals sign
     ))
 
