@@ -13,7 +13,7 @@
     (= value 'multiplication) "*"
     (= value 'division) "/"
     (= value 'equals) "="
-    (= 'value 'backspace) "Del"
+    (= value 'backspace) "Del"
     :else "unknown"))
 
 (defn key-to-operation [key]
