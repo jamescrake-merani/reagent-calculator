@@ -54,8 +54,8 @@
 
 (defn backspace
   [state]
-  (if (and (some? @(:operator state)) @(nil? (:right-value state)))
-    (reset! (:operator state) nil)
+  (if (and (some? @(:operation state)) @(nil? (:right-value state)))
+    (reset! (:operation state) nil)
     (let [to-backspace (if (some? @(:right-value state))
                          (:right-value state)
                          (:left-value state))]
