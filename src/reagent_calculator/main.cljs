@@ -2,6 +2,9 @@
   [:require [reagent.core :as r]
    [reagent.dom :as rd]])
 
+;; TODO: There's quite a bit of reptition here; could come up with a better
+;; solution
+
 (defn represent-value [value]
   (cond
     (int? value) (str value)
@@ -11,6 +14,16 @@
     (= value 'division) "/"
     (= value 'equals) "="
     :else "unknown"))
+
+(defn key-to-operation [key]
+  (cond
+    (= key "+") 'addition
+    (= key "-") 'subtraction
+    (or (= key "x") (= key "*")) 'multiplication
+    (or (= key "/") (= key "÷")) 'division
+    (= key "=") 'equals
+    :else nil
+    ))
 
 (defn swap-value-appender!
   [atom value]
@@ -84,7 +97,10 @@
   (let [input (-> event .-key)
         parsed-input (parse-long input)]
     (if parsed-input
-      (handle-button state parsed-input))))
+      (handle-button state parsed-input)
+      (let [operation (key-to-operation input)]
+        (when-not (nil? operation)
+          (handle-button state operation))))))
 
 (defn calculator
   []
