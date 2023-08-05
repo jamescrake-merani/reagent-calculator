@@ -52,6 +52,12 @@
   (doseq [value (vals state)]
     (reset! value nil)))
 
+(defn backspace-value
+  [value]
+  (if (= 1 (count value))
+    nil
+    (clojure.string/join (drop-last value))))
+
 (defn backspace
   [state]
   (if (and (some? @(:operation state)) (nil? @(:right-value state)))
@@ -59,7 +65,7 @@
     (let [to-backspace (if (some? @(:right-value state))
                          (:right-value state)
                          (:left-value state))]
-      (swap! to-backspace #(clojure.string/join (drop-last %))))))
+      (swap! to-backspace backspace-value))))
 
 
 (defn handle-button [state value]
