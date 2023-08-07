@@ -16,6 +16,11 @@
     (= value 'backspace) "Del"
     :else "unknown"))
 
+(def operations ['addition 'subtraction 'multiplication 'division])
+
+(defn operation? [x]
+  (some #{x} operations))
+
 (defn key-to-operation [key]
   (cond
     (= key "+") 'addition
