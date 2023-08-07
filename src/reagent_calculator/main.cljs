@@ -84,7 +84,7 @@
 (defn handle-button [state value]
   (cond
     (some? @(:result state)) (do
-                               (if (symbol? value)
+                               (if (operation? value)
                                  (result-into-new-calc state value)
                                  (all-clear! state))
                                (handle-button state value))
