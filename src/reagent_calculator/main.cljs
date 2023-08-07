@@ -6,6 +6,14 @@
 ;; TODO: There's quite a bit of reptition here; could come up with a better
 ;; solution
 
+(def button-row-style
+  {:display "flex",
+   :justify-content "start"
+   })
+
+(def button-style
+  {:flex-grow 1})
+
 (defn represent-value [value]
   (cond
     (int? value) (str value)
@@ -107,10 +115,10 @@
   [state]
   (map
    (fn [values]
-     [:div {:id "calculator-btn-row" :key values}
+     [:div {:id "calculator-btn-row" :style button-row-style :key values}
       (map (fn [value]
              [:button
-              {:on-click #(handle-button state value) :key value}
+              {:on-click #(handle-button state value) :style button-style :key value}
               (represent-value value)])
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
