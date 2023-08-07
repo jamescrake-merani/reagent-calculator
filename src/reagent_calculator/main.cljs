@@ -8,7 +8,8 @@
 
 (def button-row-style
   {:display "flex",
-   :justify-content "start"
+   :justify-content "start",
+   :max-width "500px"
    })
 
 (def button-style
