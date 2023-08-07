@@ -88,7 +88,7 @@
                                  (result-into-new-calc state value)
                                  (all-clear! state))
                                (handle-button state value))
-    (int? value) (if (nil? @(:operation state))
+    (or (int? value) (= value ".")) (if (nil? @(:operation state))
                    (swap-value-appender! (:left-value state) value)
                    (swap-value-appender! (:right-value state) value))
     ;; Shouldn't let the user enter an operation when there's nothing on the
@@ -126,10 +126,16 @@
     (not (and (nil? @(:left-value state)) (nil? @(:right-value state)) (nil? @(:operation state)))) (str @(:left-value state) " " (represent-value @(:operation state)) " " @(:right-value state))
     :else ""))
 
+(defn parse-input [input]
+  (let [parsed-long (parse-long input)]
+    (cond parsed-long parsed-long
+          (= input ".") input
+          :else nil)))
+
 (defn on-typed-input
   [event state]
   (let [input (-> event .-key)
-        parsed-input (parse-long input)]
+        parsed-input (parse-input input)]
     (if parsed-input
       (handle-button state parsed-input)
       (let [operation (key-to-operation input)]
