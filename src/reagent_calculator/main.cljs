@@ -71,7 +71,6 @@
 
 (defn result-into-new-calc
   [state value]
-  (js/console.log @(:result state))
   (reset! (:left-value state) (str @(:result state)))
   (reset! (:operation state) nil)
   (reset! (:right-value state) nil)
