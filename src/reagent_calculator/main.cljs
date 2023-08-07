@@ -123,7 +123,7 @@
            values)])
    ;; TODO: These probably aren't arranged well but it should be easy to change
    ;; this later
-   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication 'division] [0 'equals 'backspace "."]]))
+   [[1 2 3 'addition] [4 5 6 'subtraction] [7 8 9 'multiplication] [0 'backspace "." 'division] ['equals]]))
 
 ;; FIXME: I think there might be a better solution to this problem. Its just
 ;; that I can't think of one at present so this will have to do
