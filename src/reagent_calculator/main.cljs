@@ -69,10 +69,21 @@
                          (:left-value state))]
       (swap! to-backspace backspace-value))))
 
+(defn result-into-new-calc
+  [state value]
+  (js/console.log @(:result state))
+  (reset! (:left-value state) (str @(:result state)))
+  (reset! (:operation state) nil)
+  (reset! (:right-value state) nil)
+  (reset! (:result state) nil))
+
 (defn handle-button [state value]
   (cond
-    (some? @(:result state)) (do (all-clear! state)
-                                 (handle-button state value))
+    (some? @(:result state)) (do
+                               (if (symbol? value)
+                                 (result-into-new-calc state value)
+                                 (all-clear! state))
+                               (handle-button state value))
     (int? value) (if (nil? @(:operation state))
                    (swap-value-appender! (:left-value state) value)
                    (swap-value-appender! (:right-value state) value))
