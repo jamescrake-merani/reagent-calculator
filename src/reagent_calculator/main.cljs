@@ -1,6 +1,7 @@
 (ns reagent-calculator.main
   [:require [reagent.core :as r]
-   [reagent.dom :as rd]])
+   [reagent.dom :as rd]
+   [clojure.edn :as edn]])
 
 ;; TODO: There's quite a bit of reptition here; could come up with a better
 ;; solution
@@ -38,8 +39,8 @@
 
 (defn calc-result
    [state]
-  (let [left-value-num (parse-long @(:left-value state))
-        right-value-num (parse-long @(:right-value state))
+  (let [left-value-num (edn/read-string @(:left-value state))
+        right-value-num (edn/read-string @(:right-value state))
         operation @(:operation state)]
     (cond
       (= operation 'addition) (+ left-value-num right-value-num)
