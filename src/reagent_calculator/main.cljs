@@ -183,7 +183,6 @@
 
 (defn base []
   [:div
-   [:h1 "Reagent Calculator"]
    [calculator]])
 
 
