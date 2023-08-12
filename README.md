@@ -1,6 +1,6 @@
 # Reagent Calculator 
 
-This is a practice project in creating a calcular component with Reagent which is a React wrapper in ClojureScript.
+This is a practice project in creating a calcular component with Reagent which is a React wrapper in ClojureScript. The calculator is [hosted online here](https://jamescm.co.uk/web_projects/reagent_calculator/), and you can also [read my article](https://jamescm.co.uk/posts/creating-a-simple-calculator-with-reagent-and-clojurescript.html) where I describe my thoughts in creating the calculator.
 
 # Hacking
 
